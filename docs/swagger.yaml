@@ -1,0 +1,128 @@
+basePath: /api/v1
+definitions:
+  requests.LoginUserReq:
+    properties:
+      password:
+        type: string
+      user_name:
+        type: string
+    type: object
+  response.LoginUserResp:
+    properties:
+      avatar:
+        type: string
+      last_login_time:
+        type: string
+      token:
+        type: string
+      user_name:
+        type: string
+    type: object
+  response.SuccessResponse:
+    properties:
+      code:
+        type: integer
+      data: {}
+    type: object
+externalDocs:
+  description: OpenAPI
+  url: https://swagger.io/resources/open-api/
+host: localhost:7001
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: go 博客系统
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: blog API
+  version: "1.0"
+paths:
+  /public/login:
+    post:
+      consumes:
+      - application/json
+      description: 通过用户名和密码登录系统
+      parameters:
+      - description: 登录请求体
+        in: body
+        name: loginUser
+        required: true
+        schema:
+          $ref: '#/definitions/requests.LoginUserReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 登录成功，返回用户信息及token
+          schema:
+            $ref: '#/definitions/response.LoginUserResp'
+        "400":
+          description: 请求参数无效
+          schema:
+            type: string
+        "401":
+          description: 用户名或密码错误
+          schema:
+            type: string
+      summary: 用户登录
+      tags:
+      - 认证
+  /public/uploadFile:
+    post:
+      consumes:
+      - application/json
+      description: 该接口用于获处理文件上传
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '成功返回文件信息，例如: ''xxxxx'''
+          schema:
+            $ref: '#/definitions/response.SuccessResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: 通用文件上传-单文件
+      tags:
+      - 文件上传
+  /user/getHello:
+    get:
+      consumes:
+      - application/json
+      description: 该接口用于获取当前登录用户的信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '成功返回用户信息，例如: ''John Doe'''
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 测试接口
+      tags:
+      - 用户管理
+  /user/getUserInfoById/:id:
+    get:
+      consumes:
+      - application/json
+      description: 该接口用于获取当前登录用户的信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功返回用户信息
+          schema:
+            $ref: '#/definitions/response.SuccessResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: 通过id获取用户信息
+      tags:
+      - 用户管理
+securityDefinitions:
+  BasicAuth:
+    type: basic
+swagger: "2.0"

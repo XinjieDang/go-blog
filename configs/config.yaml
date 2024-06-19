@@ -1,0 +1,45 @@
+# server
+server:
+  port: ':7001'
+  # debug | release | test 运行环境
+  gin_mode: debug
+
+# MySQL
+mysql:
+  host: 127.0.0.1
+  port: 3306
+  user_name: root
+  pass_word: 123456
+  data_base: go_blog
+
+# redis
+redis:
+  host: 127.0.0.1
+  port: 6379
+  pass_word:
+  user_name:
+  db: 1
+
+# jwt配置
+jwt:
+  admin:
+    # 设置jwt签名加密时使用的秘钥
+    secret: admin
+    # 设置jwt过期时间
+    ttl: 7200000
+    # 设置前端传递过来的令牌名称
+    name: token
+  user:
+    # 设置jwt签名加密时使用的秘钥
+    secret: user
+    # 设置jwt过期时间
+    ttl: 7200000
+    # 设置前端传递过来的令牌名称
+    name: Authorization
+api:
+  prefix: /api/v1
+
+#文件上传配置
+upload:
+  #文件上传路径
+  path: D:/demo/images
